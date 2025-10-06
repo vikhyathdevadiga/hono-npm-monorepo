@@ -39,7 +39,7 @@ jobs:
       - name: Deploy from build-output
         run: |
           cd build-output
-          mkdir apps/api
+          mkdir -p apps/api
           vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
 
       # - name: Pack
