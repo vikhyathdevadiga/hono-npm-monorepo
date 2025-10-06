@@ -27,10 +27,12 @@ jobs:
         env:
           VERCEL_EXPERIMENTAL_STANDALONE_BUILD: ${{ env.VERCEL_EXPERIMENTAL_STANDALONE_BUILD }}
 
-      - name: Move .vercel to output folder
+      - name: Move all .vercel folders to output
         run: |
           mkdir -p output
-          mv .vercel output/
+          find . -type d -name ".vercel" -exec bash -c 'dir="{}"; cp -r "$dir"/* output/' \;
 
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt output --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          cd output
+          vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
